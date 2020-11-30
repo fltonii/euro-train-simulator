@@ -12,7 +12,7 @@ public class Train {
         direction = trainDirection;
         locationNode = startLocation;
         locationNode.setTrain(this);
-        passengers = (int) (Math.random() * 40);
+        passengers = (int) (Math.random() * 40) + 10;
         this.chooChoo();
     }
 
@@ -76,6 +76,10 @@ public class Train {
     public void chooChoo() {
         System.out.println("CHOO CHOO");
         // kkk
+    }
+
+    public TrainDirection getDirection() {
+        return direction;
     }
 
     private void moveAhead() throws OutOfTrackException {

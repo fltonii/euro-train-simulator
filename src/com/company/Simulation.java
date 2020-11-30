@@ -7,22 +7,29 @@ public class Simulation {
     private static Railway railway;
 
     public static void main(String[] args) {
+        System.out.println("Inicializando simulação. Pressione q para finalizar.");
         railway = generateRailway();
 
         boolean shouldRepeat = true;
         Scanner scanner = new Scanner(System.in);
         while (shouldRepeat) {
-            scanner.nextLine();
             spawnTrains();
-            railway.moveTrains();
             System.out.println(railway);
+            String input = scanner.nextLine();
+            if(input.toLowerCase().equals("q")) {
+                railway.reportBoardingLog();
+                shouldRepeat = false;
+                continue;
+            }
+            railway.moveTrains();
             tick();
         }
+        scanner.close();
     }
 
     private static Railway generateRailway() {
         int stationCount = (int) (Math.random() * 20) + 10;
-        return new Railway(stationCount);
+        return new Railway(8);
     }
 
     private static void tick() {

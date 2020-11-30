@@ -22,6 +22,10 @@ public class StationNode extends Node<Integer> {
             passengersIn = passengersIn - removed;
         }
 
+        if(passengersOut > train.getPassengers()) {
+            passengersOut = train.getPassengers();
+        }
+
         this.totalBoarded += passengersIn;
         this.totalUnboarded += passengersOut;
 
@@ -31,6 +35,9 @@ public class StationNode extends Node<Integer> {
 
     public boolean isStretchBusyUntilNextStation(TrainDirection direction) {
         Node head = this.getNext(direction);
+        if (head == null) {
+            return false;
+        }
         boolean found = false;
         while (!found) {
             if (head instanceof StationNode) {

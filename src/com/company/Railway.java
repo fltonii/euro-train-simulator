@@ -2,7 +2,7 @@ package com.company;
 
 import com.company.LinkedList.DoublyLinkedList;
 
-import java.io.File;
+import java.io.*;
 
 public class Railway {
     private StationNode startStation;
@@ -49,6 +49,8 @@ public class Railway {
     public void spawnTrains() {
         trainList.insert(new Train(TrainDirection.AtoB, this.startStation));
         trainList.insert(new Train(TrainDirection.BtoA, this.endStation));
+        startStation.cyclePassengers();
+        endStation.cyclePassengers();
     }
 
     public void moveTrains() {
@@ -63,7 +65,30 @@ public class Railway {
     }
 
     public void reportBoardingLog() {
-    // create report here
+        File file = new File("./src/com/company/boardingLog.txt");
+        try {
+            FileWriter writer = new FileWriter(file);
+            PrintWriter printer = new PrintWriter(writer);
+            recursivelyFillLogFile(startStation, printer);
+            printer.close();
+        } catch (IOException error) {
+            System.out.println(error);
+            System.out.println("Erro ao salvar o arquivo de log");
+        }
+
+    }
+
+    private void recursivelyFillLogFile(Node head, PrintWriter printer) {
+        for (int i = 0; i < numElements; i++) {
+            if (head instanceof StationNode) {
+                printer.println("Estação de número " + head.getElement());
+                printer.println("Embarques: " + ((StationNode) head).getTotalBoarded());
+                printer.println("Desembarques: " + ((StationNode) head).getTotalUnboarded());
+                printer.println("------------------");
+                printer.println();
+            }
+            head = head.getNext();
+        }
     }
 
     private String formatStationString(StationNode station) {
@@ -95,10 +120,19 @@ public class Railway {
     }
 
     private String formatTrainString(Train train) {
-        String returnStatement =  "( " + train.getPassengers() + " passageiros " + "\uD83D\uDE82" ;
-        if(train.getPendingWait() != 0) {
+        String returnStatement = "( ";
+        if(train.getDirection() == TrainDirection.BtoA) {
+            returnStatement += " \u2B05 ";
+        }
+        returnStatement += train.getPassengers() + " passageiros " + "\uD83D\uDE82";
+        if (train.getPendingWait() != 0) {
             returnStatement += " esperando " + train.getPendingWait();
         }
+
+        if (train.getDirection() == TrainDirection.AtoB) {
+            returnStatement += " \u27A1 ";
+        }
+
         return returnStatement + " )";
     }
 
@@ -118,14 +152,14 @@ public class Railway {
 
     private void insert20kmBetween(StationNode start, StationNode end) {
         Node head = start;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 12; i++) {
             Node oldHead = head;
             head = new MilestoneNode(numElements + i);
             oldHead.setNext(head);
             head.setPrevious(oldHead);
         }
 
-        numElements += 20;
+        numElements += 12;
         head.setNext(end);
         end.setPrevious(head);
     }
