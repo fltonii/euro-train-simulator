@@ -3,7 +3,7 @@ package com.company;
 import java.util.Scanner;
 
 public class Simulation {
-    private static int secondsPassed = 0;
+    private static int minutesPassed = 0;
     private static Railway railway;
 
     public static void main(String[] args) {
@@ -13,6 +13,10 @@ public class Simulation {
         boolean shouldRepeat = true;
         Scanner scanner = new Scanner(System.in);
         while (shouldRepeat) {
+            if(minutesPassed == 510) {
+                shouldRepeat = false;
+                continue;
+            }
             spawnTrains();
             System.out.println(railway);
             String input = scanner.nextLine();
@@ -24,6 +28,7 @@ public class Simulation {
             railway.moveTrains();
             tick();
         }
+        railway.reportBoardingLog();
         scanner.close();
     }
 
@@ -33,17 +38,18 @@ public class Simulation {
     }
 
     private static void tick() {
-        secondsPassed++;
+        minutesPassed++;
     }
 
     private static void spawnTrains() {
         if (shouldSpawnTrain()) {
+            System.out.println(minutesPassed);
             railway.spawnTrains();
         }
     }
 
     private static boolean shouldSpawnTrain() {
-        return secondsPassed == 0 || secondsPassed % 30 == 0;
+        return minutesPassed == 0 || minutesPassed % 30 == 0;
     }
 
 }

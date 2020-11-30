@@ -6,13 +6,15 @@ public class Train {
     private boolean active = true;
     private int passengers = 0;
     private int pendingWait = 0;
+    private String name;
 
 
-    public Train(TrainDirection trainDirection, Node startLocation) {
+    public Train(TrainDirection trainDirection, Node startLocation, String trainName) {
         direction = trainDirection;
         locationNode = startLocation;
         locationNode.setTrain(this);
         passengers = (int) (Math.random() * 40) + 10;
+        name = trainName;
         this.chooChoo();
     }
 
@@ -39,10 +41,14 @@ public class Train {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     private boolean shouldGetIntoStopNode() {
         return !(locationNode instanceof StopNode) &&
                 ((locationNode instanceof StationNode && ((StationNode) locationNode).isStretchBusyUntilNextStation(direction))
-                || (locationNode.getNext(direction) instanceof StationNode && locationNode.getNext(direction).getBusy()));
+                        || (locationNode.getNext(direction) instanceof StationNode && locationNode.getNext(direction).getBusy()));
     }
 
     private boolean shouldGetOutOfStopNode() {
@@ -62,13 +68,13 @@ public class Train {
     }
 
     public void boardPassengers(int amount) {
-        System.out.print(amount + " passengers got in in station " + locationNode.getElement() + ", ");
+        System.out.println(amount + " passageiros entraram no trem (" + getName() + ") pela estação " + locationNode.getElement());
         pendingWait += Math.floor(amount / 2);
         passengers += amount;
     }
 
     public void unboardPassengers(int amount) {
-        System.out.println(amount + " passengers got out in station " + locationNode.getElement());
+        System.out.println(amount + " passageiros sairam do trem (" + getName() + ") pela estação " + locationNode.getElement());
         pendingWait += Math.floor(amount / 2);
         passengers -= amount;
     }
@@ -89,14 +95,15 @@ public class Train {
             throw new OutOfTrackException();
         }
         newLocationNode.setTrain(this);
+        locationNode = newLocationNode;
         if (newLocationNode instanceof StationNode) {
             ((StationNode) newLocationNode).cyclePassengers();
         }
-        locationNode = newLocationNode;
     }
 
     private void getIntoNextStopNode() {
         locationNode.setTrain(null);
+        System.out.println(this.getName() + " teve de entrar no paradouro da estação " + locationNode.getElement());
         Node newLocationNode = findClosestStation(locationNode).getNextStopNode(locationNode);
         newLocationNode.setTrain(this);
         locationNode = newLocationNode;

@@ -47,8 +47,10 @@ public class Railway {
     }
 
     public void spawnTrains() {
-        trainList.insert(new Train(TrainDirection.AtoB, this.startStation));
-        trainList.insert(new Train(TrainDirection.BtoA, this.endStation));
+        int  trainNumber = trainList.numElements();
+        trainList.insert(new Train(TrainDirection.AtoB, this.startStation, TrainDirection.AtoB + " - " + trainNumber));
+        trainList.insert(new Train(TrainDirection.BtoA, this.endStation, TrainDirection.BtoA + " - " + trainNumber));
+
         startStation.cyclePassengers();
         endStation.cyclePassengers();
     }
@@ -121,7 +123,7 @@ public class Railway {
 
     private String formatTrainString(Train train) {
         String returnStatement = "( ";
-        if(train.getDirection() == TrainDirection.BtoA) {
+        if (train.getDirection() == TrainDirection.BtoA) {
             returnStatement += " \u2B05 ";
         }
         returnStatement += train.getPassengers() + " passageiros " + "\uD83D\uDE82";
@@ -152,14 +154,14 @@ public class Railway {
 
     private void insert20kmBetween(StationNode start, StationNode end) {
         Node head = start;
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 20; i++) {
             Node oldHead = head;
             head = new MilestoneNode(numElements + i);
             oldHead.setNext(head);
             head.setPrevious(oldHead);
         }
 
-        numElements += 12;
+        numElements += 20;
         head.setNext(end);
         end.setPrevious(head);
     }

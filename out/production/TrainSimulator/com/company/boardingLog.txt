@@ -1,120 +1,135 @@
 Estação de número 1
-Embarques: 0
-Desembarques: 0
+Embarques: 58
+Desembarques: 46
 ------------------
 
 Estação de número 2
-Embarques: 20
-Desembarques: 25
+Embarques: 43
+Desembarques: 36
 ------------------
 
 Estação de número 3
-Embarques: 35
-Desembarques: 25
+Embarques: 44
+Desembarques: 47
 ------------------
 
 Estação de número 4
-Embarques: 11
-Desembarques: 19
+Embarques: 24
+Desembarques: 45
 ------------------
 
 Estação de número 5
-Embarques: 11
-Desembarques: 17
+Embarques: 33
+Desembarques: 45
 ------------------
 
 Estação de número 6
-Embarques: 10
-Desembarques: 8
-------------------
-
-Estação de número 7
-Embarques: 1
-Desembarques: 1
-------------------
-
-Estação de número 8
-Embarques: 7
-Desembarques: 9
-------------------
-
-Estação de número 9
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 10
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 11
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 12
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 13
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 14
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 15
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 16
-Embarques: 0
-Desembarques: 0
-------------------
-
-Estação de número 17
-Embarques: 5
-Desembarques: 9
-------------------
-
-Estação de número 18
-Embarques: 9
-Desembarques: 1
-------------------
-
-Estação de número 19
-Embarques: 7
-Desembarques: 5
-------------------
-
-Estação de número 20
-Embarques: 8
-Desembarques: 7
-------------------
-
-Estação de número 21
-Embarques: 15
-Desembarques: 24
-------------------
-
-Estação de número 22
-Embarques: 21
+Embarques: 42
 Desembarques: 34
 ------------------
 
-Estação de número 23
-Embarques: 24
+Estação de número 7
+Embarques: 46
+Desembarques: 29
+------------------
+
+Estação de número 8
+Embarques: 45
+Desembarques: 48
+------------------
+
+Estação de número 9
+Embarques: 36
+Desembarques: 37
+------------------
+
+Estação de número 10
+Embarques: 29
+Desembarques: 39
+------------------
+
+Estação de número 11
+Embarques: 34
+Desembarques: 35
+------------------
+
+Estação de número 12
+Embarques: 43
+Desembarques: 21
+------------------
+
+Estação de número 13
+Embarques: 34
+Desembarques: 31
+------------------
+
+Estação de número 14
+Embarques: 38
+Desembarques: 42
+------------------
+
+Estação de número 15
+Embarques: 38
+Desembarques: 28
+------------------
+
+Estação de número 16
+Embarques: 39
+Desembarques: 35
+------------------
+
+Estação de número 17
+Embarques: 33
 Desembarques: 24
 ------------------
 
+Estação de número 18
+Embarques: 35
+Desembarques: 35
+------------------
+
+Estação de número 19
+Embarques: 52
+Desembarques: 31
+------------------
+
+Estação de número 20
+Embarques: 32
+Desembarques: 38
+------------------
+
+Estação de número 21
+Embarques: 21
+Desembarques: 40
+------------------
+
+Estação de número 22
+Embarques: 46
+Desembarques: 37
+------------------
+
+Estação de número 23
+Embarques: 29
+Desembarques: 44
+------------------
+
 Estação de número 24
-Embarques: 0
-Desembarques: 0
+Embarques: 56
+Desembarques: 33
+------------------
+
+Estação de número 25
+Embarques: 24
+Desembarques: 27
+------------------
+
+Estação de número 26
+Embarques: 49
+Desembarques: 58
+------------------
+
+Estação de número 27
+Embarques: 67
+Desembarques: 44
 ------------------
 
