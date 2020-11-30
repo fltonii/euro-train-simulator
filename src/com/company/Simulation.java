@@ -14,16 +14,16 @@ public class Simulation {
         while (shouldRepeat) {
             scanner.nextLine();
             spawnTrains();
-            System.out.println(railway);
             railway.moveTrains();
+            System.out.println(railway);
             tick();
         }
     }
 
     private static Railway generateRailway() {
-//        int stationCount = (int) (Math.random() * 20) + 10;
+        int stationCount = (int) (Math.random() * 20) + 10;
 
-        return new Railway(4);
+        return new Railway(8);
 
     }
 

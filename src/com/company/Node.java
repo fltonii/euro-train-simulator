@@ -5,17 +5,21 @@ public class Node<E> {
     protected Node<E> next;
     protected Node<E> previous;
     protected String type;
-    private boolean isBusy = false;
+    private Train train;
 
     public Node() {
     }
 
-    public void setBusy(boolean busy) {
-        isBusy = busy;
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
+    public Train getTrain() {
+        return train;
     }
 
     public boolean getBusy() {
-        return isBusy;
+        return train != null;
     }
 
     public E getElement() {

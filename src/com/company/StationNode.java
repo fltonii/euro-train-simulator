@@ -5,10 +5,26 @@ public class StationNode extends Node<Integer> {
     private boolean isFinalStation = false;
     private StopNode StopRight;
     private StopNode StopLeft;
+    private int totalBoarded = 0;
 
     public StationNode(int e) {
         this.element = e;
         this.type = "Station";
+    }
+
+
+    public void cyclePassengers() {
+        int passengersIn = (int) (Math.random() * 10);
+        int passengersOut = (int) (Math.random() * 10);
+        Train train = getTrain();
+
+        if ((train.getPassengers() + passengersIn - passengersOut) > 50) {
+            int removed = train.getPassengers() + passengersIn - passengersOut - 50;
+            passengersIn = passengersIn - removed;
+        }
+
+        train.boardPassengers(passengersIn);
+        train.unboardPassengers(passengersOut);
     }
 
     public void setStartingStation(boolean startingStation) {

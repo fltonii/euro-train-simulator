@@ -1,15 +1,16 @@
 package com.company;
 
+import com.company.LinkedList.DoublyLinkedList;
+
 public class Railway {
     private StationNode startStation;
     private StationNode endStation;
     private int numElements = 0;
     private int stationCount = 0;
-    private int trainCount = 0;
-    private Train[] trainList;
+    private DoublyLinkedList<Train> trainList;
 
     public Railway(int stations) {
-        trainList = new Train[1000];
+        trainList = new DoublyLinkedList<>();
         for (int i = 0; i < stations; i++) {
             insertStation();
         }
@@ -69,15 +70,17 @@ public class Railway {
     }
 
     public void spawnTrains() {
-        trainList[trainCount] = new Train(TrainDirection.AtoB, this.startStation);
-        trainList[trainCount + 1] = new Train(TrainDirection.BtoA, this.endStation);
-        trainCount += 2;
+        trainList.insert(new Train(TrainDirection.AtoB, this.startStation));
+        trainList.insert(new Train(TrainDirection.BtoA, this.endStation));
     }
 
     public void moveTrains() {
-        if (trainList.length > 0) {
-            for (int i = 0; i < trainCount; i++) {
-                trainList[i].moveAhead();
+        for (int i = 0; i < trainList.numElements(); i++) {
+            Train train = trainList.get(i);
+            try {
+                if (train.isActive()) train.moveAhead();
+            } catch (OutOfTrackException e) {
+                train.setActive(false);
             }
         }
     }
