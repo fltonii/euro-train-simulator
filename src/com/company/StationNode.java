@@ -22,7 +22,7 @@ public class StationNode extends Node<Integer> {
             passengersIn = passengersIn - removed;
         }
 
-        if(passengersOut > train.getPassengers()) {
+        if (passengersOut > train.getPassengers()) {
             passengersOut = train.getPassengers();
         }
 
@@ -54,7 +54,7 @@ public class StationNode extends Node<Integer> {
     }
 
     public StopNode getNextStopNode(Node<Integer> mile) {
-        if (mile.getElement() < getNext().getElement()) {
+        if (getNext() == null || mile.getElement() < getNext().getElement()) {
             return getBtoAStop();
         }
         return getAtoBStop();
