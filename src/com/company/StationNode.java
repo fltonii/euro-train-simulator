@@ -1,11 +1,10 @@
 package com.company;
 
 public class StationNode extends Node<Integer> {
-    private boolean isStartingStation = false;
-    private boolean isFinalStation = false;
     private StopNode BtoAStop;
     private StopNode AtoBStop;
     private int totalBoarded = 0;
+    private int totalUnboarded = 0;
 
     public StationNode(int e) {
         this.element = e;
@@ -22,6 +21,9 @@ public class StationNode extends Node<Integer> {
             int removed = train.getPassengers() + passengersIn - passengersOut - 50;
             passengersIn = passengersIn - removed;
         }
+
+        this.totalBoarded += passengersIn;
+        this.totalUnboarded += passengersOut;
 
         train.boardPassengers(passengersIn);
         train.unboardPassengers(passengersOut);
@@ -45,26 +47,10 @@ public class StationNode extends Node<Integer> {
     }
 
     public StopNode getNextStopNode(Node<Integer> mile) {
-        if(mile.getElement() < getNext().getElement()) {
+        if (mile.getElement() < getNext().getElement()) {
             return getBtoAStop();
         }
         return getAtoBStop();
-    }
-
-    public void setStartingStation(boolean startingStation) {
-        isStartingStation = startingStation;
-    }
-
-    public boolean isStartingStation() {
-        return isStartingStation;
-    }
-
-    public void setFinalStation(boolean startingStation) {
-        isFinalStation = startingStation;
-    }
-
-    public boolean isFinalStation() {
-        return isFinalStation;
     }
 
     public void setAtoBStop(StopNode atoBStop) {
@@ -81,5 +67,13 @@ public class StationNode extends Node<Integer> {
 
     public StopNode getBtoAStop() {
         return BtoAStop;
+    }
+
+    public int getTotalBoarded() {
+        return totalBoarded;
+    }
+
+    public int getTotalUnboarded() {
+        return totalUnboarded;
     }
 }

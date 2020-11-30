@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.LinkedList.DoublyLinkedList;
 
+import java.io.File;
+
 public class Railway {
     private StationNode startStation;
     private StationNode endStation;
@@ -23,9 +25,7 @@ public class Railway {
             StationNode newStation = new StationNode(stationCount + 1);
             insert20kmBetween(this.endStation, newStation);
             insertTrainStopsBetween(this.endStation, newStation);
-            this.endStation.setFinalStation(false);
             this.endStation = newStation;
-            this.endStation.setFinalStation(true);
         }
         stationCount++;
         numElements++;
@@ -60,6 +60,10 @@ public class Railway {
                 train.setActive(false);
             }
         }
+    }
+
+    public void reportBoardingLog() {
+    // create report here
     }
 
     private String formatStationString(StationNode station) {
