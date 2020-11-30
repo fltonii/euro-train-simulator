@@ -7,6 +7,7 @@ public class Train {
     public Train(TrainDirection trainDirection, Node startLocation) {
         direction = trainDirection;
         locationNode = startLocation;
+        locationNode.setBusy(true);
     }
 
     public Node getLocationNode() {
@@ -25,12 +26,13 @@ public class Train {
         this.direction = direction;
     }
 
-    public void moveAhead() {
-        if(direction == TrainDirection.AtoB) {
-            locationNode = locationNode.getNext();
-        } else {
-            locationNode = locationNode.getPrevious();
+    public void moveAhead() throws OutOfTrackException {
+        locationNode.setBusy(false);
+        locationNode = locationNode.getNext(direction);
+        if(locationNode == null) {
+            throw new OutOfTrackException();
         }
+        locationNode.setBusy(true);
     }
 
     public void chooChoo() {

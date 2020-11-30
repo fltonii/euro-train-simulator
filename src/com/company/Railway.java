@@ -5,8 +5,11 @@ public class Railway {
     private StationNode endStation;
     private int numElements = 0;
     private int stationCount = 0;
+    private int trainCount = 0;
+    private Train[] trainList;
 
     public Railway(int stations) {
+        trainList = new Train[1000];
         for (int i = 0; i < stations; i++) {
             insertStation();
         }
@@ -66,32 +69,45 @@ public class Railway {
     }
 
     public void spawnTrains() {
-        new Train(TrainDirection.AtoB, this.startStation);
-        new Train(TrainDirection.BtoA, this.endStation);
+        trainList[trainCount] = new Train(TrainDirection.AtoB, this.startStation);
+        trainList[trainCount + 1] = new Train(TrainDirection.BtoA, this.endStation);
+        trainCount += 2;
+    }
+
+    public void moveTrains() {
+        if (trainList.length > 0) {
+            for (int i = 0; i < trainCount; i++) {
+                trainList[i].moveAhead();
+            }
+        }
     }
 
     private String formatStationString(StationNode station) {
         String returnStatement = "";
         returnStatement += "  [ ";
-        if (station.getStopLeft() != null) {
-            returnStatement += station.getStopLeft().getElement() + "  ";
-        }
-        if(station.getBusy()) {
+        returnStatement += formatStopString(station.getStopLeft());
+        if (station.getBusy()) {
             returnStatement += "(  \uD83D\uDE82  )";
         } else {
             returnStatement += "( " + station.getType() + "  " + station.getElement() + " )";
         }
-        if (station.getStopRight() != null) {
-            returnStatement += "  " + station.getStopRight().getElement();
-        }
+        returnStatement += formatStopString(station.getStopRight());
         return returnStatement += " ]  ";
     }
 
     private String formatMilestoneString(MilestoneNode milestone) {
-        if(milestone.getBusy()) {
+        if (milestone.getBusy()) {
             return "[  \uD83D\uDE82  ]";
         }
         return "[ " + milestone.getType() + "  " + milestone.getElement() + " ]";
+    }
+
+    private String formatStopString(StopNode stop) {
+        if (stop == null) return "";
+        if (stop.getBusy()) {
+            return " { \uD83D\uDE82 } ";
+        }
+        return " { " + stop.getElement() + " }  ";
     }
 
     private void insertTrainStopsBetween(StationNode start, StationNode end) {
@@ -106,14 +122,14 @@ public class Railway {
 
     private void insert20kmBetween(StationNode start, StationNode end) {
         Node head = start;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             Node oldHead = head;
             head = new MilestoneNode(numElements + i);
             oldHead.setNext(head);
-            head.setPrevious(head);
+            head.setPrevious(oldHead);
         }
 
-        numElements += 20;
+        numElements += 5;
         head.setNext(end);
         end.setPrevious(head);
     }

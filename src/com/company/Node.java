@@ -7,7 +7,8 @@ public class Node<E> {
     protected String type;
     private boolean isBusy = false;
 
-    public Node() {}
+    public Node() {
+    }
 
     public void setBusy(boolean busy) {
         isBusy = busy;
@@ -16,6 +17,7 @@ public class Node<E> {
     public boolean getBusy() {
         return isBusy;
     }
+
     public E getElement() {
         return this.element;
     }
@@ -25,7 +27,7 @@ public class Node<E> {
     }
 
     public Node<E> getNext(TrainDirection direction) {
-        if(direction == TrainDirection.AtoB) {
+        if (direction == TrainDirection.AtoB) {
             return this.getNext();
         } else {
             return this.getPrevious();
