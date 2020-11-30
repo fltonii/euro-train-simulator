@@ -1,12 +1,11 @@
 package com.company;
 
-public class StopNode<E> extends Node<E> {
+public class StopNode extends Node<Integer> {
      private StationNode station;
-    public StopNode(E e) {
+    public StopNode(int e) {
         this.element = e;
         this.type = "Desvio";
     }
-
 
     public StationNode getStation() {
         return station;

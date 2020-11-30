@@ -3,8 +3,8 @@ package com.company;
 public class StationNode extends Node<Integer> {
     private boolean isStartingStation = false;
     private boolean isFinalStation = false;
-    private StopNode StopRight;
-    private StopNode StopLeft;
+    private StopNode BtoAStop;
+    private StopNode AtoBStop;
     private int totalBoarded = 0;
 
     public StationNode(int e) {
@@ -27,6 +27,30 @@ public class StationNode extends Node<Integer> {
         train.unboardPassengers(passengersOut);
     }
 
+    public boolean isStretchBusyUntilNextStation(TrainDirection direction) {
+        Node head = this.getNext(direction);
+        boolean found = false;
+        while (!found) {
+            if (head instanceof StationNode) {
+                found = true;
+                continue;
+            }
+            if (head.getBusy()) {
+                return true;
+            }
+            head = head.getNext(direction);
+        }
+
+        return false;
+    }
+
+    public StopNode getNextStopNode(Node<Integer> mile) {
+        if(mile.getElement() < getNext().getElement()) {
+            return getBtoAStop();
+        }
+        return getAtoBStop();
+    }
+
     public void setStartingStation(boolean startingStation) {
         isStartingStation = startingStation;
     }
@@ -43,19 +67,19 @@ public class StationNode extends Node<Integer> {
         return isFinalStation;
     }
 
-    public void setStopLeft(StopNode stopLeft) {
-        StopLeft = stopLeft;
+    public void setAtoBStop(StopNode atoBStop) {
+        AtoBStop = atoBStop;
     }
 
-    public void setStopRight(StopNode stopRight) {
-        StopRight = stopRight;
+    public void setBtoAStop(StopNode btoAStop) {
+        BtoAStop = btoAStop;
     }
 
-    public StopNode getStopLeft() {
-        return StopLeft;
+    public StopNode getAtoBStop() {
+        return AtoBStop;
     }
 
-    public StopNode getStopRight() {
-        return StopRight;
+    public StopNode getBtoAStop() {
+        return BtoAStop;
     }
 }

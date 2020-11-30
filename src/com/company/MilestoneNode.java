@@ -1,7 +1,7 @@
 package com.company;
 
-public class MilestoneNode<E> extends Node<E> {
-    public MilestoneNode(E e) {
+public class MilestoneNode extends Node<Integer> {
+    public MilestoneNode(int e) {
         this.element = e;
         this.type = "Km";
     }

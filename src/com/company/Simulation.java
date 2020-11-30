@@ -22,9 +22,7 @@ public class Simulation {
 
     private static Railway generateRailway() {
         int stationCount = (int) (Math.random() * 20) + 10;
-
-        return new Railway(8);
-
+        return new Railway(stationCount);
     }
 
     private static void tick() {
@@ -34,7 +32,6 @@ public class Simulation {
     private static void spawnTrains() {
         if (shouldSpawnTrain()) {
             railway.spawnTrains();
-            System.out.println("  Choo Choo");
         }
     }
 

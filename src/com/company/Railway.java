@@ -46,29 +46,6 @@ public class Railway {
         return returnStatement;
     }
 
-    public boolean isStretchBusy(StationNode start, StationNode end) {
-        TrainDirection direction;
-        int distance;
-        if (start.getElement() < end.getElement()) {
-            direction = TrainDirection.AtoB;
-            distance = end.getElement() - start.getElement();
-        } else {
-            direction = TrainDirection.BtoA;
-            distance = start.getElement() - end.getElement();
-        }
-
-        Node head = start;
-
-        for (int i = 0; i < distance; i++) {
-            if (head.getBusy()) {
-                return true;
-            }
-            head = start.getNext(direction);
-        }
-
-        return false;
-    }
-
     public void spawnTrains() {
         trainList.insert(new Train(TrainDirection.AtoB, this.startStation));
         trainList.insert(new Train(TrainDirection.BtoA, this.endStation));
@@ -78,7 +55,7 @@ public class Railway {
         for (int i = 0; i < trainList.numElements(); i++) {
             Train train = trainList.get(i);
             try {
-                if (train.isActive()) train.moveAhead();
+                if (train.isActive()) train.tick();
             } catch (OutOfTrackException e) {
                 train.setActive(false);
             }
@@ -88,51 +65,63 @@ public class Railway {
     private String formatStationString(StationNode station) {
         String returnStatement = "";
         returnStatement += "  [ ";
-        returnStatement += formatStopString(station.getStopLeft());
+        returnStatement += formatStopString(station.getBtoAStop(), TrainDirection.BtoA);
         if (station.getBusy()) {
-            returnStatement += "(  \uD83D\uDE82  )";
+            returnStatement += formatTrainString(station.getTrain());
         } else {
             returnStatement += "( " + station.getType() + "  " + station.getElement() + " )";
         }
-        returnStatement += formatStopString(station.getStopRight());
+        returnStatement += formatStopString(station.getAtoBStop(), TrainDirection.AtoB);
         return returnStatement += " ]  ";
     }
 
     private String formatMilestoneString(MilestoneNode milestone) {
         if (milestone.getBusy()) {
-            return "[  \uD83D\uDE82  ]";
+            return formatTrainString(milestone.getTrain());
         }
         return "[ " + milestone.getType() + "  " + milestone.getElement() + " ]";
     }
 
-    private String formatStopString(StopNode stop) {
+    private String formatStopString(StopNode stop, TrainDirection direction) {
         if (stop == null) return "";
         if (stop.getBusy()) {
-            return " { \uD83D\uDE82 } ";
+            return formatTrainString(stop.getTrain());
         }
-        return " { " + stop.getElement() + " }  ";
+        return " { " + stop.getElement() + " " + direction + " }  ";
+    }
+
+    private String formatTrainString(Train train) {
+        String returnStatement =  "( " + train.getPassengers() + " passageiros " + "\uD83D\uDE82" ;
+        if(train.getPendingWait() != 0) {
+            returnStatement += " esperando " + train.getPendingWait();
+        }
+        return returnStatement + " )";
     }
 
     private void insertTrainStopsBetween(StationNode start, StationNode end) {
-        StopNode startRightStop = new StopNode(start.getElement() + " Right Stop");
-        start.setStopRight(startRightStop);
-        startRightStop.setStation(start);
+        StopNode startAtoBStopNode = new StopNode(start.getElement());
+        startAtoBStopNode.setNext(start.getNext());
+        startAtoBStopNode.setPrevious(start);
+        start.setAtoBStop(startAtoBStopNode);
+        startAtoBStopNode.setStation(start);
 
-        StopNode endLeftStop = new StopNode(end.getElement() + " leftStop");
-        end.setStopLeft(endLeftStop);
-        endLeftStop.setStation(end);
+        StopNode endBtoAStopNode = new StopNode(end.getElement());
+        endBtoAStopNode.setPrevious(end.getPrevious());
+        endBtoAStopNode.setNext(end);
+        end.setBtoAStop(endBtoAStopNode);
+        endBtoAStopNode.setStation(end);
     }
 
     private void insert20kmBetween(StationNode start, StationNode end) {
         Node head = start;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             Node oldHead = head;
             head = new MilestoneNode(numElements + i);
             oldHead.setNext(head);
             head.setPrevious(oldHead);
         }
 
-        numElements += 5;
+        numElements += 20;
         head.setNext(end);
         end.setPrevious(head);
     }
